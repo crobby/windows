@@ -18,7 +18,40 @@ variable "standard_users" {
     {
       name     = "User1"
       password = "p@ssw0rd"
-    }
+    },
+    {
+      name     = "User2"
+      password = "p@ssw0rd"
+    },
+    {
+      name     = "User3"
+      password = "p@ssw0rd"
+    },
+    {
+      name     = "User4"
+      password = "p@ssw0rd"
+    },{
+      name     = "User5"
+      password = "p@ssw0rd"
+    },{
+      name     = "User6"
+      password = "p@ssw0rd"
+    },
+    {
+      name     = "User7"
+      password = "p@ssw0rd"
+    },
+    {
+      name     = "User8"
+      password = "p@ssw0rd"
+    },
+    {
+      name     = "User9"
+      password = "p@ssw0rd"
+    },{
+      name     = "User10"
+      password = "p@ssw0rd"
+    },
   ]
 }
 
@@ -45,4 +78,3 @@ variable "ssh_public_key_path" {
   description = "The path to a public SSH key to be mounted on hosts."
   default     = "~/.ssh/id_rsa.pub"
 }
-
