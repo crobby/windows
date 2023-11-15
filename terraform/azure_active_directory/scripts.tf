@@ -30,4 +30,10 @@ locals {
     impersonation_account_password = local.default_password
     gmsas                          = local.gmsas
   })
+
+  install_adfs = templatefile("${path.module}/files/install_adfs.ps1", {
+    domain_name  = local.active_directory_fqdn
+    netbios_name = local.active_directory_netbios_name
+    password     = local.active_directory_password
+  })
 }

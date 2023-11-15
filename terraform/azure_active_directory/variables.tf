@@ -8,6 +8,11 @@ variable "name" {
   }
 }
 
+#variable "dnslabel" {
+#  type        = string
+#  description = "The label that becomes the first part of the DNS entry."
+#}
+
 variable "standard_users" {
   type = list(object({
     name     = string

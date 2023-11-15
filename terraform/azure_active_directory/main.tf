@@ -47,7 +47,8 @@ module "server" {
         local.install_active_directory,
         local.setup_active_directory,
         local.setup_networking,
-        local.setup_integration
+        local.setup_integration,
+        local.install_adfs,
       ]
     }
   ]
