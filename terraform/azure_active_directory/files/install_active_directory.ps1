@@ -1,4 +1,4 @@
-$domainName = "${domain_name}"
+$domainName = "ctrl" + "${domain_name}"
 $domainNetbiosName = "${netbios_name}"
 $safeModeAdminstratorPassword = ConvertTo-SecureString "${password}" -AsPlainText -Force
 
