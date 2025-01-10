@@ -1,12 +1,16 @@
 
-$region = "westus"
-$rancherBase = "https://trusty-donkey-actually.ngrok-free.app"
+
+$rancherBase = "https://rancherdevel.chadrancher.us"
+$instance = Invoke-RestMethod -Headers @{"Metadata"="true"} -Uri "http://169.254.169.254/metadata/instance?api-version=2021-02-01"
+$instanceName = $instance.compute.name
+$region = $instance.compute.location
 $dnslabel = hostname
 $metadataUrl = "$rancherBase/v1-saml/adfs/saml/metadata"
 $serviceEndpoint = "$rancherBase/v1-saml/adfs/saml/acs"
 $displayName = "TEST ADFS $dnslabel"
 $issuer = "Active Directory"
-$dnsEntries = @("$dnslabel.$region.cloudapp.azure.com", "$dnslabel")
+
+$dnsEntries = @("$instanceName.$region.cloudapp.azure.com", "$dnslabel.$region.cloudapp.azure.com", "$dnslabel")
 
 $certThumbprint = (New-SelfSignedCertificate -DnsName $dnsEntries -CertStoreLocation Cert:\LocalMachine\My).Thumbprint
 Install-AdfsFarm -CertificateThumbprint $certThumbprint -FederationServiceDisplayName "$dnslabel" -FederationServiceName "$dnslabel.$region.cloudapp.azure.com" -GroupServiceAccountIdentifier "ad\ADFSFarmService$"
@@ -23,4 +27,4 @@ c:[Type == "http://schemas.microsoft.com/ws/2008/06/identity/claims/windowsaccou
 => issue(store = "Active Directory", types = ("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname", "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/upn", "http://schemas.xmlsoap.org/claims/Group", "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"), query = ";givenName,userPrincipalName,tokenGroups(longDomainQualifiedName),sAMAccountName;{0}", param = c.Value);'
 Set-AdfsRelyingPartyTrust -TargetName $displayName -IssuanceTransformRules $issuanceTransformRules
 Restart-Service adfssrv
-echo "Setup complete:  Your federation metadata should be accessible at https://$dnslabel.$region.cloudapp.azure.com/federationmetadata/2007-06/federationmetadata.xml"
+echo "Setup complete:  Your federation metadata should be accessible at https://$instanceName.$region.cloudapp.azure.com/federationmetadata/2007-06/federationmetadata.xml"
